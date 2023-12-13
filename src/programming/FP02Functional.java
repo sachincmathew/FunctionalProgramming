@@ -2,6 +2,7 @@ package programming;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FP02Functional {
     public static void main (String[] args) {
@@ -38,23 +39,52 @@ public class FP02Functional {
         //.findFirst() returns the first element
         //.findAny() returns any element
 
-        printAllCoursesAlphabetically(List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
-                "Kubernetes"));
+        printAllCoursesAlphabetically(
+                List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
+                        "Kubernetes"));
         System.out.println("--------------------------------------------");
 
-        printAllCoursesReverseAlphabetically(List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
-                "Kubernetes"));
+        printAllCoursesReverseAlphabetically(
+                List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
+                        "Kubernetes"));
         System.out.println("--------------------------------------------");
 
-        printAllCoursesBasedOnLength(List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
-                "Kubernetes"));
+        printAllCoursesBasedOnLength(
+                List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
+                        "Kubernetes"));
         System.out.println("--------------------------------------------");
 
-        printAllCoursesBasedOnReversedLength(List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
-                "Kubernetes"));
+        printAllCoursesBasedOnReversedLength(
+                List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
+                        "Kubernetes"));
         System.out.println("--------------------------------------------");
 
+        List<Integer> doubledNumbers = findDoubledNumbers(List.of(12, 9, 13, 4, 6, 2, 4, 12, 15));
+        doubledNumbers.forEach(System.out::println);
+        System.out.println("--------------------------------------------");
 
+        List<Integer> evenNumbers = findEvenDoubledNumbers(List.of(12, 9, 13, 4, 6, 2, 4, 12, 15));
+        evenNumbers.forEach(System.out::println);
+        System.out.println("--------------------------------------------");
+
+        List<Integer> lengths = findLengths(
+                List.of("Spring", "Spring Boot", "API", "Microservices", "AWS", "PCF", "Azure", "Docker",
+                        "Kubernetes"));
+        lengths.forEach(System.out::println);
+
+
+    }
+
+    private static List<Integer> findLengths (List<String> courses) {
+        return courses.stream().map(String::length).collect(Collectors.toList());
+    }
+
+    private static List<Integer> findEvenDoubledNumbers (List<Integer> integers) {
+        return integers.stream().filter(number -> number % 2 == 0).map(n -> n*n).collect(Collectors.toList());
+    }
+
+    private static List<Integer> findDoubledNumbers (List<Integer> integers) {
+        return integers.stream().map(number -> number * number).collect(Collectors.toList());
     }
 
     private static void printAllCoursesBasedOnReversedLength (List<String> spring) {
@@ -77,7 +107,8 @@ public class FP02Functional {
     }
 
     private static int findSumOfOddSquaresInListFunctional (List<Integer> integers) {
-        return integers.stream().filter(number -> number % 2 != 0).map(number -> number * number).reduce(0, Integer::sum);
+        return integers.stream().filter(number -> number % 2 != 0).map(number -> number * number).reduce(0,
+                Integer::sum);
     }
 
     private static int findSumOfCubesInListFunctional (List<Integer> integers) {
